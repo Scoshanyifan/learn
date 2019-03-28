@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.scosyf.learn.dao.ControllerLogsMapper">
+	<resultMap id="BaseResultMap" type="com.bugull.farm.web.model.ControllerLogs">
+		<id column="id" jdbcType="VARCHAR" property="id" />
+		<result column="controllerClass" jdbcType="VARCHAR" property="controllerClass" />
+		<result column="controllerMethod" jdbcType="VARCHAR" property="controllerMethod" />
+		<result column="userId" jdbcType="VARCHAR" property="userId" />
+		<result column="userName" jdbcType="VARCHAR" property="userName" />
+		<result column="parameters" jdbcType="VARCHAR" property="parameters" />
+		<result column="parameterNames" jdbcType="VARCHAR" property="parameterNames" />
+		<result column="ip" jdbcType="VARCHAR" property="ip" />
+		<result column="time" jdbcType="DATE" property="time" />
+		<result column="description" jdbcType="VARCHAR" property="description" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, controllerClass, controllerMethod, userId, userName, parameters, parameterNames, ip, time, description
+	</sql>
+	
+	<select id="selectById" parameterType="java.lang.String"
+		resultType="ControllerLogs">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM controllerlogs WHERE ID=#{id}
+	</select>
+
+	<select id="selectByIds" parameterType="java.util.List"
+		resultType="ControllerLogs">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM controllerlogs WHERE ID IN
+		<foreach item="item" index="index" collection="list" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</select>
+
+	<select id="selectPageByCondition" parameterType="java.util.Map"
+		resultType="ControllerLogs">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM controllerlogs
+		<where>
+			<if test="methods != null and parentIds.size() > 0 " >
+				controllerMethod in
+				<foreach collection="methods" item="method" open="(" separator="," close=")" >
+						#{method}
+				</foreach>
+			</if>
+			<if test="userName != null  &amp; userName != ''">
+				and userName like concat('%', #{userName}, '%')
+			</if>
+			<if test="startTime != null  &amp; startTime != ''">
+				and time >= #{startTime}
+			</if>
+			<if test="endTime != null  &amp; endTime != ''">
+				and time >= #{endTime}
+			</if>
+		</where>
+		order by time desc
+	</select>
+	
+	<select id="selectMethodsAll" resultType="java.lang.String" >
+		select distinct controllerMethod from controllerlogs;
+	</select>
+</mapper>
