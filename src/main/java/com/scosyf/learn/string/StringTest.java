@@ -2,6 +2,14 @@ package com.scosyf.learn.string;
 
 import java.util.Arrays;
 
+/**
+ * 1. String的不可变性体现在内部char[]是final的，即字符串内容不可变，初始化时确定，并且不提供修改方法，如果调用replace等方法直接返新的String
+ * 	  PS：可以利用反射特性破坏String的不可变性 https://segmentfault.com/a/1190000019865846
+ *
+ * 2. final String是保证String不可被继承
+ *
+ * @author kunbu
+ **/
 public class StringTest {
 	
 	public static final String TEXT = "林内温馨提示：感谢使用林内E86系列热水器，您的热水器已使用超过%1$s年，"

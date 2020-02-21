@@ -96,6 +96,7 @@ public class FutureCallable {
     		 * }
 			 */
 			System.out.println("cancel task: " + result.cancel(true));
+
 			//因为不能取消已经开始执行的任务，所以">>> task is ended"会被打印，但是依然会报错
 			//System.out.println("cancle task: " + result.cancel(false));
 			
