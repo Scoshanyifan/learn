@@ -10,7 +10,7 @@
 		<!--spring -->
 		<spring.version>4.3.3.RELEASE</spring.version>
 		<!--test -->
-		<junit.version>4.12</junit.version>
+		<junit.version>4.13.1</junit.version>
 		<!--json -->
 		<fastjson.version>1.2.16</fastjson.version>
 		<!-- druid -->
